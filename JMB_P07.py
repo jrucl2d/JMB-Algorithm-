@@ -1,19 +1,18 @@
 c = int(input())
 mine = []
 res = []
-while c > 0:
-    n = int(input())
-    l = int(input())
-    ans = 100.0  # 정답을 넣을 변수
-    for i in range(n):
-        tmp = int(input())
-        mine.append(tmp)
-    for i in range(l, n + 1):  # 팀 개수
-        for j in range(n - i + 1):  # 시작 날짜
-            sliced = mine[j:j+i]
-            tmpres = sum(sliced) / i
-            ans = min(ans, tmpres)
-    c -= 1
-    res.append(ans)
-for i in range(len(res)):
-    print(res[i])
+for a in range(c):
+    n, l = map(int, input().split())
+    ans = 100000000.0
+    mine = list(map(int, input().split()))
+    for i in range(0, n - l + 1):
+        day = 1
+        tmp = 0
+        for j in range(i, n):
+            tmp += mine[j]
+
+            if day >= l:
+                ans = min(ans, tmp/day)
+            day += 1
+
+    print('%.8f' % ans)
