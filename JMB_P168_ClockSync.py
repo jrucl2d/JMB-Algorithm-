@@ -24,17 +24,18 @@ def Push(num, arr):
 
 
 def func(arr, swch):
-    if swch[0] == 10:  # 마지막 스위치를 눌렀을 때 끝나면 0 리턴, 아니면 INF 리턴
+    if swch[0] == 10:
         if IsDone(arr) == True:
             return 0
         else:
             return INF
     ans = INF
-    nextSwch = []
-    nextSwch.append(swch[0]+1)
-    for i in range(4):  # 한 스위치 당 세 번까지 누를 수 있음
-        ans = min(ans, i + func(arr, nextSwch))
-        Push(i, arr)
+    for cnt in range(4):  # 누르는 횟수, 0~3
+        n = swch[0] + 1
+        tmp = []  # 다음 스위치로 넘기기 때문에 1을 더해줘야 함
+        tmp.append(n)
+        ans = min(ans, cnt+func(arr, tmp))
+        Push(swch[0], arr)  # 현재 스위치를 누름
     return ans
 
 
@@ -42,4 +43,8 @@ c = int(input())
 for _ in range(c):
     arr = list(map(int, input().split()))
     swch = [0]
-    print(func(arr, swch))
+    ans = func(arr, swch)
+    if ans > INF - 10:
+        print(-1)
+    else:
+        print(ans)
